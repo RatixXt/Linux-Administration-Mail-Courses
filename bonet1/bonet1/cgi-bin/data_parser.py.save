@@ -1,0 +1,4 @@
+#!/usr/bin/python3
+with open("/var/vhosts/bonet1/data/temp") as file_handler:
+	file_handler.readline()
+	print('{} I parse this data!'.format(file_handler.read()))
