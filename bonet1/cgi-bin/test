@@ -6,16 +6,25 @@ cat << ENDHTML
 
 <html>
 	<META HTTP-EQUIV="REFRESH" CONTENT="60">
+	<style type="text/css">
+	table {
+		border-collapse: collapse;
+	}
+	table th,
+	table td {
+		padding: 0 3px;
+	}
+	table.brd th,
+	table.brd td {
+		border: 1px solid #000;
+	}
+	</style>
 	<body>
-		<h1> Hello World!</h1>
-	<pre>
-	Your IP address: $HTTP_X_REAL_IP
-	Your Port: $HTTP_X_REAL_PORT
-	Nginx Version: $HTTP_NGINX_VERSION
-	$(python3  hello.py >  /var/vhosts/bonet1/data/test)
-	$(python3 data_test.py)
+	<p><strong>Your IP address</strong>: $HTTP_X_REAL_IP</p> 
+	<p><strong>Your Port</strong>: $HTTP_X_REAL_PORT </p> 
+	<p><strong> Nginx Version</strong>: $HTTP_NGINX_VERSION </p>
 	$(./test_data_time.sh)
-	</pre>
+
 	</body>
 </html>
 ENDHTML

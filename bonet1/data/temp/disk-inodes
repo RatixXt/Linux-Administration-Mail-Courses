@@ -1,6 +1,6 @@
 Filesystem                Inodes IUsed IFree IUse% Mounted on
 udev                         68K   488   68K    1% /dev
-tmpfs                        72K   650   72K    1% /run
+tmpfs                        72K   651   72K    1% /run
 /dev/mapper/home--vg-root   706K   98K  608K   14% /
 tmpfs                        72K     1   72K    1% /dev/shm
 tmpfs                        72K     4   72K    1% /run/lock
