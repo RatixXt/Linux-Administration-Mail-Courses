@@ -49,8 +49,15 @@ with open("/var/vhosts/bonet1/data/last_min") as last_min:
 		for name in cpu_names:
 			print('<th>{}</th>'.format(name))
 		print('</tr> \n <tr>')
-		for elem in avg:
-			print('<td>{0:.2f}</td>'.format(elem))		
+		for i in range(len(avg)):
+			if i != 2:
+				print('<td>{0:.2f}</td>'.format(avg[i]))
+			elif avg[i] >=90:
+				print('<td><span style="color:#FF0000">{0:.2f}</span</td>'.format(avg[i]))
+			elif avg[i] >=80:
+				print('<td><span style="color:#FFFF00">{0:.2f}</span</td>'.format(avg[i]))
+			else:
+				print('<td>{0:.2f}</td>'.format(avg[i]))
 		print('</table>')
 		#Disk Load
 		print('<h3>Disk Load</h3>')
