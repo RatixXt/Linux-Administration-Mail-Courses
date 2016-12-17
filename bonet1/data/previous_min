@@ -1,10 +1,10 @@
-0.17 0.13 0.15
+0.11 0.15 0.11
 %user %nice %system %iowait %steal %idle
-2.81 0.57 12.11 0.19 0.00 84.31
+2.81 0.56 12.09 0.19 0.00 84.35
 tps kB_read/s kB_wrtn/s kB_read kB_wrtn
 sda dm-0 dm-1
-1.77 10.08 22.8 1145706.0 2591384.0
-2.88 9.63 21.66 1094579.0 2461864.0
+1.75 9.95 22.59 1145763.0 2602549.0
+2.86 9.5 21.47 1094635.0 2473028.0
 0.04 0.07 0.13 8142.0 14928.0
 8
 Filesystem                 Size  Used Avail Use% Mounted on
@@ -29,7 +29,7 @@ Filesystem                Inodes IUsed IFree IUse% Mounted on
  enp0s3     lo 
 bytes packets errs drop fifo frame compressed multicast
 bytes packets errs drop fifo colls carrier compressed
-166464561 445612 0 0 0 0 0 4
-4 33876261 227508 0 0 0 0 0
-3866284 21535 0 0 0 0 0 0
-0 3866284 21535 0 0 0 0 0
+167165487 453480 0 0 0 0 0 4
+4 34517144 231993 0 0 0 0 0
+3933342 21835 0 0 0 0 0 0
+0 3933342 21835 0 0 0 0 0

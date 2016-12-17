@@ -1,0 +1,32 @@
+#!/usr/bin/python3
+import re
+
+
+def average(list1, list2):
+	return [(list1[i] + list2[i])/2 for i in range(len(list1))]  
+	
+
+with open("/var/vhosts/bonet1/data/last_min") as last_min:
+	with open("/var/vhosts/bonet1/data/previous_min") as prev_min:
+		# Load average
+		last_avg =list( map(float, last_min.readline().split()))
+		prev_avg = list(map(float, prev_min.readline().split()))
+		print('<strong>Load Average</strong>:', end=' ')
+		avg = average(last_avg, prev_avg)
+		for elem in avg:
+			if elem >= 0.9:
+				print('<span style="color:#FF0000"> {0:.2f}</span>'.format(elem), end=' ')
+			elif elem >=0.8:
+				print('<span style="color:#FFFF00">{0:.2f}</span>'.format(elem), end=' ')
+			else:
+				print('{0:.2f}'.format(elem), end=' ')
+		print()
+		# CPU
+		cpu_names = last_min.readline().split()
+		last_val =  list(map(float, last_min.readline().split()))
+		dump = prev_min.readline().split()
+		prev_val = list(map(float, prev_min.readline().split()))
+		avg = average(last_val, prev_val)
+		print(avg)
+		for elem in avg:
+			print('{0:.2f} !!!'.format(elem), end=' ')		

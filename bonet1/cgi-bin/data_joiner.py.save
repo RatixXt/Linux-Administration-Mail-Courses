@@ -1,0 +1,12 @@
+#!/usr/bin/python3
+import re
+from termcolor
+
+with open("/var/vhosts/bonet1/data/last_min") as last_min:
+	with open("/var/vhosts/bonet1/data/previous_min") as prev_min:
+		load_avg_last = last_min.readline().split()
+		load_avg_prev = prev_min.readline().split()
+		
+print('Load average: {}{}{}')    
+	
+		print("{} I'm data joiner!".format(last_min.read()))
