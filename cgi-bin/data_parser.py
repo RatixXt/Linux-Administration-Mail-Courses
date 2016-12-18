@@ -59,3 +59,16 @@ with open("/var/vhosts/bonet1/data/temp/net-load") as file_handler:
 		this_trans = trans[i]
 		print(*this_trans, sep=' ')
 
+# Parse listens
+listens = []
+with open("/var/vhosts/bonet1/data/temp/listens") as file_handler:
+	lines = file_handler.readlines()
+	for l in lines:
+		ls = l.split()
+		if ls[3] == '0A':
+			lp = ls[1].split(':')
+			ip = str(lp[0])
+			pair = "%s.%s.%s.%s:%s" %( int(ip[6:8], 16), int(ip[4:6], 16), int(ip[2:4], 16), int(ip[0:2], 16), int(lp[1], 16))
+			listens.append(str(pair))
+	print(len(listens), *listens, sep='\n')
+

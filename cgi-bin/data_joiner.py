@@ -20,8 +20,17 @@ def colored_table(string, color):
         if color == 'yellow':
                 print('<td><span style="color:#FFFF00">{}</span></td>'.format(string), end= ' ')
 
-
-
+def listen_sockets():
+	listens = []
+	with open("/proc/net/tcp").readlines() as lines:
+		for l in lines:
+			ls = l.split()
+			if ls[3] == '0A':
+				lp = ls[1].split(':')
+				ip = str(lp[0])
+				pair = "%s.%s.%s.%s:%s" %( int(ip[6:8], 16), int(ip[4:6], 16), int(ip[2:4], 16), int(ip[0:2], 16), int(lp[1], 16))
+				listens.append(str(pair))
+		return listens
 
 with open("/var/vhosts/bonet1/data/last_min") as last_min:
 	with open("/var/vhosts/bonet1/data/previous_min") as prev_min:
@@ -184,4 +193,12 @@ with open("/var/vhosts/bonet1/data/last_min") as last_min:
 			[print('<td>{}</td>'.format(val)) for val in rec_avg[i]]
 			[print('<td>{}</td>'.format(val)) for val in trans_avg[i]]
 			print('</tr>')
+		print('</table>')
+		#Listens sockets
+		print('<h3>Listen TCP sockets</h3><table class="brd"><tr><th>Sockets</th></tr>')
+		num_listens = int(last_min.readline())
+		dump = prev_min.readline()
+		for i in range(num_listens):
+			dump = prev_min.readline()
+			print('<tr><td>{}</td></tr>'.format(last_min.readline()))
 		print('</table>')
