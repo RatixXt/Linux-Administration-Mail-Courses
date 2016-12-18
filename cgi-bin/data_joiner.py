@@ -20,6 +20,13 @@ def colored_table(string, color):
         if color == 'yellow':
                 print('<td><span style="color:#FFFF00">{}</span></td>'.format(string), end= ' ')
 
+def colored_table_float(string, color):
+        if color == 'red':
+                print('<td><span style="color:#FF0000">{0:.2f}</span></td>'.format(string), end=' ')
+        if color == 'yellow':
+                print('<td><span style="color:#FFFF00">{0:.2f}</span></td>'.format(string), end= ' ')
+
+
 def listen_sockets():
 	listens = []
 	with open("/proc/net/tcp").readlines() as lines:
@@ -82,9 +89,16 @@ with open("/var/vhosts/bonet1/data/last_min") as last_min:
 			print('<th>{}</th>'.format(name))
 		print('</tr>\n')
 		for i in range(len(devices_names)):
-		    print('<tr><th>{}</th>'.format(devices_names[i]))
-		    [print('<td>{0:.2f}</td>'.format(val)) for val in avg[i]]
-		    print('</tr>')
+			print('<tr><th>{}</th>'.format(devices_names[i]))
+			[print('<td>{0:.2f}</td>'.format(avg[i][j])) for j in range(6)]
+			for j in range(6, len(avg[i])):
+				if avg[i][j] >= 90 or (j == 7 and avg[i][j] >= 0.9):
+					colored_table_float(avg[i][j], 'red')
+				elif avg[i][j] >= 80 or (j == 7 and avg[i][j] >= 0.8):
+					colored_table_float(avg[i][j], 'yellow')
+				else:
+					print('<td>{0:.2f}</td>'.format(avg[i][j]))
+			print('</tr>')
 		print('</table>')
 		# Disk blocks
 		print('<h3>Disk Space Information</h3>')
@@ -183,17 +197,37 @@ with open("/var/vhosts/bonet1/data/last_min") as last_min:
 			trans_last = list(map(int, last_min.readline().split()))
 			trans_prev = list(map(int, prev_min.readline().split()))
 			trans_avg.append(list(map(int, average(trans_last, trans_prev))))
-		print('<h3>Net Load</h3><table class="brd"><tr><th>Interface</th><th colspan="{}" align="center">Recieved</th><th colspan="{}" align="center">Transmitted</th></tr>'.format(len(rec_names), len(trans_names)))
+#		Цельная таблица - плохо читается в elinks :(
+#		print('<h3>Net Load</h3><table class="brd"><tr><th>Interface</th><th colspan="{}" align="center">Recieved</th><th colspan="{}" align="center">Transmitted</th></tr>'.format(len(rec_names), len(trans_names)))
+#		print('<tr><td></td>')
+#		[print('<th>{}</th>'.format(name)) for name in rec_names]
+#		[print('<th>{}</th>'.format(name)) for name in trans_names]
+#		print('</tr>')
+#		for i in range(len(inf_names)):
+#			print('<tr><td>{}</td>'.format(inf_names[i]))
+#			[print('<td>{}</td>'.format(val)) for val in rec_avg[i]]
+#			[print('<td>{}</td>'.format(val)) for val in trans_avg[i]]
+#			print('</tr>')
+#		print('</table>')
+		print('<h3>Net Load</h3><h4>Transmitted</h4><table class="brd"><tr><th>Interface</th><th colspan="{}" align="center">Recieved</th></tr>'.format(len(rec_names)))
 		print('<tr><td></td>')
 		[print('<th>{}</th>'.format(name)) for name in rec_names]
-		[print('<th>{}</th>'.format(name)) for name in trans_names]
 		print('</tr>')
 		for i in range(len(inf_names)):
 			print('<tr><td>{}</td>'.format(inf_names[i]))
 			[print('<td>{}</td>'.format(val)) for val in rec_avg[i]]
+			print('</tr>')
+		print('</table>')
+		print('<h4>Recieved</4><table class="brd"><tr><th>Interface</th><th colspan="{}" align="center">Transmitted</th></tr>'.format(len(trans_names)))
+		print('<tr><td></td>')
+		[print('<th>{}</th>'.format(name)) for name in trans_names]
+		print('</tr>')
+		for i in range(len(inf_names)):
+			print('<tr><td>{}</td>'.format(inf_names[i]))
 			[print('<td>{}</td>'.format(val)) for val in trans_avg[i]]
 			print('</tr>')
 		print('</table>')
+
 		#Listens sockets
 		print('<h3>Listen TCP sockets</h3><table class="brd"><tr><th>Sockets</th></tr>')
 		num_listens = int(last_min.readline())
