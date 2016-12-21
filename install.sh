@@ -15,9 +15,6 @@ exec()
 }
 
 cp -r ./cron ~/
-mkdir ~/temp
-exec "mkdir -p /home/temp"
-exec "chown -R $USER /home/temp"
 crontab ~/cron/cron_task
 exec "apt install sysstat"
 exec "apt-get install nginx"

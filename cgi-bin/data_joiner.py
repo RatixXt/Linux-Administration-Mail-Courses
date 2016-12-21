@@ -42,8 +42,8 @@ def listen_sockets():
 				listens.append(str(pair))
 		return listens
 
-with open("/home/temp/last_min") as last_min:
-	with open("/home/temp/previous_min") as prev_min:
+with open("/tmp/last_min") as last_min:
+	with open("/tmp/previous_min") as prev_min:
 		# Load average
 		avg = os.getloadavg()
 #		last_avg =list( map(float, last_min.readline().split()))

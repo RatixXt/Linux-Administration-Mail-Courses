@@ -8,13 +8,13 @@ HOME = os.path.expanduser('~')
 #	load_avg = re.sub('[,]',' ',file_handler.readline()).split()
 #	print(*load_avg, sep=' ')
 # Parse CPU Load
-with open(HOME+"/temp/cpu") as file_handler:
+with open("/tmp/cpu") as file_handler:
 	cpu_names = file_handler.readline().lstrip('avg-cpu: ').split()
 	cpu_val = file_handler.readline().split()
 	print(*cpu_names, sep=' ')
 	print(*cpu_val, sep=' ')
 # Parse Disk Load
-with open(HOME+"/temp/disk-load") as file_handler:
+with open("/tmp/disk-load") as file_handler:
 	names = file_handler.readline().lstrip('Device: ').split()
 	devices = file_handler.readlines()
 	devices_names = []
@@ -27,20 +27,20 @@ with open(HOME+"/temp/disk-load") as file_handler:
 	print(*names, sep=' ')
 	print(*devices_names, sep=' ')
 	[print(*vals, sep=' ') for vals in devices_vals]
-with open(HOME+"/temp/disk-data") as file_handler:
+with open("/tmp/disk-data") as file_handler:
 	space_names = file_handler.readline()
 	other = file_handler.readlines()	
 	print(len(other))
 	print(space_names, end=' ')
 	print(*other, end=' ')
-with open(HOME+"/temp/disk-inodes") as file_handler:
+with open("/tmp/disk-inodes") as file_handler:
 	space_names = file_handler.readline()
 	other = file_handler.readlines()	
 	print(len(other))
 	print(space_names, end=' ')
 	print(*other, end=' ')
 # Parse Net-Load
-with open(HOME+"/temp/net-load") as file_handler:
+with open("/tmp/net-load") as file_handler:
 	file_handler.readline()
 	dump, r_names, t_names = file_handler.readline().split('|')
 	r_names = r_names.split()
