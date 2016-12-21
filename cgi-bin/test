@@ -23,7 +23,7 @@ cat << ENDHTML
 	<p><strong>Your IP address</strong>: $HTTP_X_REAL_IP</p> 
 	<p><strong>Your Port</strong>: $HTTP_X_REAL_PORT </p> 
 	<p><strong> Nginx Version</strong>: $HTTP_NGINX_VERSION </p>
-	$(./test_data_time.sh)
+	$(./data_joiner.py)
 
 	</body>
 </html>

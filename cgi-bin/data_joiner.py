@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 import re
+import os.path
+import os
 
 
 def average(list1, list2):
@@ -29,7 +31,8 @@ def colored_table_float(string, color):
 
 def listen_sockets():
 	listens = []
-	with open("/proc/net/tcp").readlines() as lines:
+	with open("/proc/net/tcp") as file_handler:
+		lines = file_handler.readlines()
 		for l in lines:
 			ls = l.split()
 			if ls[3] == '0A':
@@ -39,17 +42,18 @@ def listen_sockets():
 				listens.append(str(pair))
 		return listens
 
-with open("/var/vhosts/bonet1/data/last_min") as last_min:
-	with open("/var/vhosts/bonet1/data/previous_min") as prev_min:
+with open("/home/temp/last_min") as last_min:
+	with open("/home/temp/previous_min") as prev_min:
 		# Load average
-		last_avg =list( map(float, last_min.readline().split()))
-		prev_avg = list(map(float, prev_min.readline().split()))
+		avg = os.getloadavg()
+#		last_avg =list( map(float, last_min.readline().split()))
+#		prev_avg = list(map(float, prev_min.readline().split()))
 		print('<p><strong>Load Average</strong>:', end=' ')
-		avg = average(last_avg, prev_avg)
+#		avg = average(last_avg, prev_avg)
 		for elem in avg:
-			if elem >= 0.9:
+			if elem >= 0.9 or elem <= 0.05:
 				colored_float(elem, 'red')
-			elif elem >=0.8:
+			elif elem >=0.8 or elem <=0.1:
 				colored_float(elem, 'yellow')
 			else:
 				print('{0:.2f}'.format(elem), end=' ')
@@ -112,7 +116,7 @@ with open("/var/vhosts/bonet1/data/last_min") as last_min:
 		for i in range(fs_num):
 		    fs_splited_last = last_min.readline().split()
 		    fs_splited_prev = prev_min.readline().split()
-		    if not fs_splited_last[5] == '/dev' and not re.search('/sys',fs_splited_last[5]):
+		    if not fs_splited_last[0] == 'tmpfs' or fs_splited_last[0] == 'udev':
 		   	 fs_data_last.append(fs_splited_last)
 		   	 fs_data_prev.append(fs_splited_prev)
 		print('<table class="brd"><tr>')
@@ -152,7 +156,7 @@ with open("/var/vhosts/bonet1/data/last_min") as last_min:
 		for i in range(fs_num):
 		    fs_splited_last = last_min.readline().split()
 		    fs_splited_prev = prev_min.readline().split()
-		    if not fs_splited_last[5] == '/dev' and not re.search('/sys',fs_splited_last[5]):
+		    if not fs_splited_last[0] == 'tmpfs' or fs_splited_last[0] == 'udev':
 		   	 fs_data_last.append(fs_splited_last)
 		   	 fs_data_prev.append(fs_splited_prev)
 		print('<table class="brd"><tr>')
@@ -230,9 +234,7 @@ with open("/var/vhosts/bonet1/data/last_min") as last_min:
 
 		#Listens sockets
 		print('<h3>Listen TCP sockets</h3><table class="brd"><tr><th>Sockets</th></tr>')
-		num_listens = int(last_min.readline())
-		dump = prev_min.readline()
-		for i in range(num_listens):
-			dump = prev_min.readline()
-			print('<tr><td>{}</td></tr>'.format(last_min.readline()))
+		listens = listen_sockets()
+		for socket in listens:
+			print('<tr><td>{}</td></tr>'.format(socket))
 		print('</table>')

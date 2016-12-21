@@ -14,6 +14,11 @@ exec()
 	fi
 }
 
+cp -r ./cron ~/
+mkdir ~/temp
+exec "mkdir -p /home/temp"
+exec "chown -R $USER /home/temp"
+crontab ~/cron/cron_task
 exec "apt install sysstat"
 exec "apt-get install nginx"
 exec "cp ./conf/nginx/balinux /etc/nginx/sites-available/"
@@ -25,8 +30,7 @@ exec "cp ./conf/apache2/bonet1.conf /etc/apache2/sites-available/"
 exec "a2dissite 000-default"
 exec "a2ensite bonet1"
 exec "a2enmod cgi"
-exec "mkdir -p /var/vhosts/bonet1/data/temp"
+exec "mkdir -p /var/vhosts/bonet1"
 exec "cp -r ./cgi-bin /var/vhosts/bonet1/"
-exec "chown www-data:www-data -R /var/vhosts/bonet1/data"
 exec "service apache2 restart"
 exec "service nginx restart"

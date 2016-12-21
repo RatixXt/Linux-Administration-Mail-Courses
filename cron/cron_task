@@ -1,0 +1,3 @@
+SHELL=/bin/bash
+MAILTO=user
+0-59 * * * * ~/cron/data.sh
